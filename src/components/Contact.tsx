@@ -32,6 +32,16 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     message: '',
   });
 
+  const [submittedData, setSubmittedData] = useState({
+    name: '',
+    email: '',
+    service: 'SEO & Generative Engine Optimization (GEO)',
+    budget: 'Flexible / Let’s Discuss',
+    message: '',
+  });
+
+  const activeData = submittedData.name ? submittedData : formData;
+
   const [status, setStatus] = useState<'idle' | 'success'>('idle');
 
   const handleCopyEmail = () => {
@@ -40,20 +50,21 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const buildSubject = () => `Project Inquiry: ${formData.service} from ${formData.name}`;
+  const buildSubject = (data = activeData) =>
+    `Project Inquiry: ${data.service} from ${data.name}`;
 
-  const buildBody = () =>
-    `Hello Anubhav,\n\nMy name is ${formData.name} (${formData.email}).\n\nService Needed: ${formData.service}\nScope / Budget: ${formData.budget}\n\nProject Details:\n${formData.message}\n\nLooking forward to speaking with you!`;
+  const buildBody = (data = activeData) =>
+    `Hello Anubhav,\n\nMy name is ${data.name} (${data.email}).\n\nService Needed: ${data.service}\nScope / Budget: ${data.budget}\n\nProject Details:\n${data.message}\n\nLooking forward to speaking with you!`;
 
-  const getMailtoUrl = () => {
-    const subject = encodeURIComponent(buildSubject());
-    const body = encodeURIComponent(buildBody());
+  const getMailtoUrl = (data = activeData) => {
+    const subject = encodeURIComponent(buildSubject(data));
+    const body = encodeURIComponent(buildBody(data));
     return `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
   };
 
-  const getGmailUrl = () => {
-    const subject = encodeURIComponent(buildSubject());
-    const body = encodeURIComponent(buildBody());
+  const getGmailUrl = (data = activeData) => {
+    const subject = encodeURIComponent(buildSubject(data));
+    const body = encodeURIComponent(buildBody(data));
     return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
       personalInfo.email
     )}&su=${subject}&body=${body}`;
@@ -76,22 +87,30 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     if (!formRef.current) return;
     if (!formRef.current.reportValidity()) return;
 
+    const trimmedName = formData.name.trim();
+    const finalData = { ...formData, name: trimmedName };
+    setSubmittedData(finalData);
+
     triggerConfetti();
     setStatus('success');
-    window.open(getGmailUrl(), '_blank', 'noopener,noreferrer');
+    window.open(getGmailUrl(finalData), '_blank', 'noopener,noreferrer');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
 
+    const trimmedName = formData.name.trim();
+    const finalData = { ...formData, name: trimmedName };
+    setSubmittedData(finalData);
+
     triggerConfetti();
     setStatus('success');
-    window.location.href = getMailtoUrl();
+    window.location.href = getMailtoUrl(finalData);
   };
 
   const handleCopyInquiry = () => {
-    const fullText = `To: ${personalInfo.email}\nSubject: ${buildSubject()}\n\n${buildBody()}`;
+    const fullText = `To: ${personalInfo.email}\nSubject: ${buildSubject(activeData)}\n\n${buildBody(activeData)}`;
     navigator.clipboard.writeText(fullText);
     setCopiedMessage(true);
     setTimeout(() => setCopiedMessage(false), 2500);
@@ -100,6 +119,13 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
   const handleResetForm = () => {
     setStatus('idle');
     setFormData({
+      name: '',
+      email: '',
+      service: 'SEO & Generative Engine Optimization (GEO)',
+      budget: 'Flexible / Let’s Discuss',
+      message: '',
+    });
+    setSubmittedData({
       name: '',
       email: '',
       service: 'SEO & Generative Engine Optimization (GEO)',
@@ -288,13 +314,16 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       <Check className="w-3 h-3" />
                       <span>Inquiry Compiled & Ready</span>
                     </div>
-                    <h4 className="font-kanit font-extrabold text-2xl sm:text-3xl text-white uppercase tracking-tight">
-                      Thank You, {formData.name || 'Friend'}!
+                    <h4 className="font-kanit font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
+                      Thank You, <span className="text-cyan-400 font-black">{activeData.name || 'Friend'}</span>!
                     </h4>
                     <p className="text-xs sm:text-sm text-[#8E99A4] max-w-md mx-auto leading-relaxed mt-2">
-                      Your inquiry has been compiled and addressed directly to{' '}
+                      {activeData.name ? (
+                        <>We've received your project inquiry, <strong className="text-white font-semibold">{activeData.name}</strong>. </>
+                      ) : null}
+                      Your message has been compiled and addressed directly to{' '}
                       <strong className="text-cyan-300 font-mono font-medium">{personalInfo.email}</strong>.
-                      Your mail client was triggered. You can also use the options below:
+                      Your mail client was triggered. You can also send or review using the options below:
                     </p>
                   </div>
 
@@ -357,11 +386,11 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       COMPILED INQUIRY SUMMARY
                     </div>
                     <div className="truncate"><span className="text-white">To:</span> {personalInfo.email}</div>
-                    <div className="truncate"><span className="text-white">From:</span> {formData.name} ({formData.email})</div>
-                    <div className="truncate"><span className="text-white">Service:</span> {formData.service}</div>
-                    <div className="truncate"><span className="text-white">Scope:</span> {formData.budget}</div>
+                    <div className="truncate"><span className="text-white">From:</span> {activeData.name} ({activeData.email})</div>
+                    <div className="truncate"><span className="text-white">Service:</span> {activeData.service}</div>
+                    <div className="truncate"><span className="text-white">Scope:</span> {activeData.budget}</div>
                     <div className="pt-1 text-[#D7E2EA] line-clamp-3 italic border-t border-white/5 mt-1">
-                      "{formData.message}"
+                      "{activeData.message}"
                     </div>
                   </div>
 
