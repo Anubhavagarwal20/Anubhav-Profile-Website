@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   ExternalLink,
   CheckCircle2,
+  Loader2,
 } from 'lucide-react';
 import { LinkedinIcon } from './LinkedinIcon';
 import { personalInfo } from '../data/portfolioData';
@@ -41,7 +42,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
   const activeData = submittedData.name ? submittedData : formData;
 
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
@@ -55,11 +56,6 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
   const buildBody = (data = activeData) =>
     `Hello Anubhav,\n\nMy name is ${data.name} (${data.email}).\n\nService Needed: ${data.service}\nScope / Budget: ${data.budget}\n\nProject Details:\n${data.message}\n\nLooking forward to speaking with you!`;
 
-  const getMailtoUrl = (data = activeData) => {
-    const subject = encodeURIComponent(buildSubject(data));
-    const body = encodeURIComponent(buildBody(data));
-    return `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
-  };
 
   const getGmailUrl = (data = activeData) => {
     const subject = encodeURIComponent(buildSubject(data));
@@ -82,7 +78,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     }
   };
 
-  const handleSendGmail = () => {
+  const handleSendGmail = async () => {
     if (!formRef.current) return;
     if (!formRef.current.reportValidity()) return;
 
@@ -90,22 +86,88 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     const finalData = { ...formData, name: trimmedName };
     setSubmittedData(finalData);
 
+    // Synchronously open Gmail Web tab
+    window.open(getGmailUrl(finalData), '_blank', 'noopener,noreferrer');
     triggerConfetti();
     setStatus('success');
-    window.open(getGmailUrl(finalData), '_blank', 'noopener,noreferrer');
+
+    // Also dispatch to inbox via backend in parallel
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: formData.email.trim(),
+          service: formData.service,
+          budget: formData.budget,
+          message: formData.message.trim(),
+        }),
+      });
+    } catch {
+      // Non-blocking
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
 
     const trimmedName = formData.name.trim();
     const finalData = { ...formData, name: trimmedName };
     setSubmittedData(finalData);
+    setStatus('submitting');
+
+    let delivered = false;
+
+    // 1. Dispatch via Vercel serverless function (/api/contact)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: formData.email.trim(),
+          service: formData.service,
+          budget: formData.budget,
+          message: formData.message.trim(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.success === true || data.success === 'true')) {
+        delivered = true;
+      }
+    } catch {
+      // Fallback to direct attempt
+    }
+
+    // 2. Direct fallback to FormSubmit API if /api/contact is unavailable (e.g. running in local static mode)
+    if (!delivered) {
+      try {
+        const res = await fetch(`https://formsubmit.co/ajax/${personalInfo.email}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            _subject: `New Portfolio Inquiry from ${trimmedName} (${formData.service})`,
+            Name: trimmedName,
+            Email: formData.email.trim(),
+            Service: formData.service,
+            Budget: formData.budget,
+            Message: formData.message.trim(),
+            _captcha: 'false',
+          }),
+        });
+        if (res.ok) delivered = true;
+      } catch {
+        // Fallback
+      }
+    }
 
     triggerConfetti();
     setStatus('success');
-    window.location.href = getMailtoUrl(finalData);
   };
 
   const handleResetForm = () => {
@@ -457,12 +519,22 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
                       <button
                         type="submit"
-                        className="flex-1 sm:flex-initial px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.16em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                        disabled={status === 'submitting'}
+                        className="flex-1 sm:flex-initial px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.16em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
                       >
-                        <span className="text-black group-hover:text-white transition-colors">
-                          SEND INQUIRY
-                        </span>
-                        <Send className="w-3.5 h-3.5 text-black group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                        {status === 'submitting' ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 text-black animate-spin" />
+                            <span className="text-black font-bold">SENDING TO INBOX...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-black group-hover:text-white transition-colors">
+                              SEND INQUIRY
+                            </span>
+                            <Send className="w-3.5 h-3.5 text-black group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>
