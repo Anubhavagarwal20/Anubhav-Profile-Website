@@ -88,20 +88,11 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Back to Top & Location (3 cols) */}
-          <div className="md:col-span-3 flex flex-col justify-between items-start md:items-end">
-            <div>
-              <span className="font-kanit font-bold text-xs uppercase tracking-widest text-[#8E99A4] block mb-1">
-                Domain Status
-              </span>
-              <span className="text-xs font-mono text-emerald-400">
-                ● anubhavagarwal.tech
-              </span>
-            </div>
-
+          {/* Back to Top (3 cols) */}
+          <div className="md:col-span-3 flex flex-col justify-start items-start md:items-end">
             <button
               onClick={scrollToTop}
-              className="mt-6 md:mt-0 flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/40 text-xs font-kanit tracking-wider text-white transition-all cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/40 text-xs font-kanit tracking-wider text-white transition-all cursor-pointer"
             >
               <span>BACK TO TOP</span>
               <ArrowUp className="w-3.5 h-3.5 text-cyan-400" />
