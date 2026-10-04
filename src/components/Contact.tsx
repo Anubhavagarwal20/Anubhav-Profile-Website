@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import {
@@ -11,8 +11,6 @@ import {
   MapPin,
   ShieldCheck,
   ExternalLink,
-  Loader2,
-  AlertCircle,
   CheckCircle2,
 } from 'lucide-react';
 import { LinkedinIcon } from './LinkedinIcon';
@@ -23,7 +21,9 @@ interface ContactProps {
 }
 
 export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,8 +32,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     message: '',
   });
 
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success'>('idle');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
@@ -41,73 +40,61 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+  const buildSubject = () => `Project Inquiry: ${formData.service} from ${formData.name}`;
 
-    setStatus('submitting');
-    setErrorMessage('');
+  const buildBody = () =>
+    `Hello Anubhav,\n\nMy name is ${formData.name} (${formData.email}).\n\nService Needed: ${formData.service}\nScope / Budget: ${formData.budget}\n\nProject Details:\n${formData.message}\n\nLooking forward to speaking with you!`;
 
+  const getMailtoUrl = () => {
+    const subject = encodeURIComponent(buildSubject());
+    const body = encodeURIComponent(buildBody());
+    return `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
+  };
+
+  const getGmailUrl = () => {
+    const subject = encodeURIComponent(buildSubject());
+    const body = encodeURIComponent(buildBody());
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+      personalInfo.email
+    )}&su=${subject}&body=${body}`;
+  };
+
+  const triggerConfetti = () => {
     try {
-      // POST directly to FormSubmit endpoint configured to deliver to anubhavagarwal2020@gmail.com
-      const response = await fetch(`https://formsubmit.co/ajax/${personalInfo.email}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          _subject: `New Portfolio Inquiry from ${formData.name} (${formData.service})`,
-          Name: formData.name,
-          Email: formData.email,
-          Service_Requested: formData.service,
-          Scope_or_Budget: formData.budget,
-          Project_Message: formData.message,
-          _template: 'table',
-          _captcha: 'false',
-        }),
+      confetti({
+        particleCount: 90,
+        spread: 75,
+        origin: { y: 0.65 },
+        colors: ['#00F0FF', '#3B82F6', '#FF6B00'],
       });
-
-      const data = await response.json();
-
-      if (response.ok && (data.success === 'true' || data.success === true || response.status === 200)) {
-        setStatus('success');
-        try {
-          confetti({
-            particleCount: 90,
-            spread: 75,
-            origin: { y: 0.65 },
-            colors: ['#00F0FF', '#3B82F6', '#FF6B00'],
-          });
-        } catch {
-          // Ignore if confetti fails
-        }
-      } else {
-        throw new Error(data.message || 'Submission was not completed');
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Network error';
-      console.warn('FormSubmit AJAX fallback:', msg);
-      setStatus('error');
-      setErrorMessage(
-        'Automated dispatch was interrupted. A pre-filled draft has also been prepared in your email app.'
-      );
-
-      // Reliable backup: trigger mailto draft directly to anubhavagarwal2020@gmail.com
-      const subject = encodeURIComponent(`Project Inquiry: ${formData.service} from ${formData.name}`);
-      const body = encodeURIComponent(
-        `Hello Anubhav,\n\nMy name is ${formData.name} (${formData.email}).\n\nService Needed: ${formData.service}\nScope / Budget: ${formData.budget}\n\nProject Details:\n${formData.message}\n\nLooking forward to speaking with you!`
-      );
-      window.open(`mailto:${personalInfo.email}?subject=${subject}&body=${body}`, '_blank');
+    } catch {
+      // Ignore if confetti fails
     }
   };
 
-  const handleOpenMailClient = () => {
-    const subject = encodeURIComponent(`Project Inquiry: ${formData.service} from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Hello Anubhav,\n\nMy name is ${formData.name} (${formData.email}).\n\nService Needed: ${formData.service}\nScope / Budget: ${formData.budget}\n\nProject Details:\n${formData.message}\n\nLooking forward to speaking with you!`
-    );
-    window.open(`mailto:${personalInfo.email}?subject=${subject}&body=${body}`, '_blank');
+  const handleSendGmail = () => {
+    if (!formRef.current) return;
+    if (!formRef.current.reportValidity()) return;
+
+    triggerConfetti();
+    setStatus('success');
+    window.open(getGmailUrl(), '_blank', 'noopener,noreferrer');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
+
+    triggerConfetti();
+    setStatus('success');
+    window.location.href = getMailtoUrl();
+  };
+
+  const handleCopyInquiry = () => {
+    const fullText = `To: ${personalInfo.email}\nSubject: ${buildSubject()}\n\n${buildBody()}`;
+    navigator.clipboard.writeText(fullText);
+    setCopiedMessage(true);
+    setTimeout(() => setCopiedMessage(false), 2500);
   };
 
   const handleResetForm = () => {
@@ -119,6 +106,10 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
       budget: 'Flexible / Let’s Discuss',
       message: '',
     });
+  };
+
+  const handleEditDetails = () => {
+    setStatus('idle');
   };
 
   return (
@@ -285,76 +276,110 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                 </div>
               </div>
 
-              {/* SUCCESS VIEW */}
+              {/* SUCCESS / DISPATCHED VIEW */}
               {status === 'success' && (
-                <div className="p-8 rounded-2xl bg-emerald-950/30 border border-emerald-500/40 text-center space-y-4">
-                  <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center mx-auto text-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.3)]">
-                    <CheckCircle2 className="w-7 h-7" />
+                <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-b from-[#161A24] to-[#12141C] border border-cyan-500/30 shadow-[0_0_40px_rgba(0,240,255,0.08)] text-center space-y-6">
+                  <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center mx-auto text-cyan-400 shadow-[0_0_25px_rgba(0,240,255,0.25)]">
+                    <CheckCircle2 className="w-8 h-8" />
                   </div>
+
                   <div>
-                    <h4 className="font-kanit font-extrabold text-2xl text-white uppercase tracking-tight">
-                      Inquiry Sent Successfully!
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 text-[11px] font-mono uppercase tracking-wider mb-2">
+                      <Check className="w-3 h-3" />
+                      <span>Inquiry Compiled & Ready</span>
+                    </div>
+                    <h4 className="font-kanit font-extrabold text-2xl sm:text-3xl text-white uppercase tracking-tight">
+                      Thank You, {formData.name || 'Friend'}!
                     </h4>
-                    <p className="text-xs sm:text-sm text-[#D7E2EA]/90 max-w-md mx-auto leading-relaxed mt-2">
-                      Thank you, <span className="font-semibold text-white">{formData.name}</span>. Your message has been dispatched to{' '}
-                      <span className="text-cyan-300 font-mono font-medium">{personalInfo.email}</span>. Anubhav will respond to you shortly at{' '}
-                      <span className="text-white font-mono">{formData.email}</span>.
+                    <p className="text-xs sm:text-sm text-[#8E99A4] max-w-md mx-auto leading-relaxed mt-2">
+                      Your inquiry has been compiled and addressed directly to{' '}
+                      <strong className="text-cyan-300 font-mono font-medium">{personalInfo.email}</strong>.
+                      Your mail client was triggered. You can also use the options below:
                     </p>
+                  </div>
+
+                  {/* Multi-Channel Quick Action Buttons */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
+                    {/* Gmail Web */}
+                    <a
+                      href={getGmailUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3.5 rounded-xl bg-cyan-500/15 border border-cyan-400/40 hover:bg-cyan-500/25 text-white font-kanit font-bold text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1.5 group cursor-pointer"
+                    >
+                      <div className="flex items-center gap-1.5 text-cyan-300">
+                        <Mail className="w-4 h-4" />
+                        <span className="text-white">Gmail Web</span>
+                        <ExternalLink className="w-3 h-3 text-cyan-400" />
+                      </div>
+                      <span className="text-[10px] font-mono text-[#8E99A4] font-normal">Open in browser</span>
+                    </a>
+
+                    {/* Native Mail App */}
+                    <a
+                      href={getMailtoUrl()}
+                      className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/40 hover:bg-white/10 text-white font-kanit font-bold text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1.5 group cursor-pointer"
+                    >
+                      <div className="flex items-center gap-1.5 text-[#D7E2EA]">
+                        <Send className="w-4 h-4 text-cyan-400" />
+                        <span>Mail App</span>
+                        <ArrowUpRight className="w-3 h-3 text-[#8E99A4] group-hover:text-white" />
+                      </div>
+                      <span className="text-[10px] font-mono text-[#8E99A4] font-normal">Default client</span>
+                    </a>
+
+                    {/* Copy Inquiry */}
+                    <button
+                      type="button"
+                      onClick={handleCopyInquiry}
+                      className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-400/40 hover:bg-white/10 text-white font-kanit font-bold text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1.5 group cursor-pointer"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {copiedMessage ? (
+                          <>
+                            <Check className="w-4 h-4 text-emerald-400" />
+                            <span className="text-emerald-400 font-mono">Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-4 h-4 text-[#8E99A4] group-hover:text-white" />
+                            <span className="text-[#D7E2EA]">Copy Text</span>
+                          </>
+                        )}
+                      </div>
+                      <span className="text-[10px] font-mono text-[#8E99A4] font-normal">Clipboard copy</span>
+                    </button>
                   </div>
 
                   {/* Summary Box */}
-                  <div className="p-4 rounded-xl bg-black/40 border border-white/10 text-left text-xs space-y-1.5 max-w-md mx-auto font-mono text-[#8E99A4]">
-                    <div><span className="text-white">Service:</span> {formData.service}</div>
-                    <div><span className="text-white">Scope:</span> {formData.budget}</div>
-                    <div className="truncate"><span className="text-white">Message:</span> {formData.message}</div>
+                  <div className="p-4 rounded-xl bg-black/50 border border-white/10 text-left text-xs font-mono space-y-1.5 max-w-lg mx-auto text-[#8E99A4]">
+                    <div className="text-[10px] uppercase tracking-wider text-cyan-400 font-semibold mb-1">
+                      COMPILED INQUIRY SUMMARY
+                    </div>
+                    <div className="truncate"><span className="text-white">To:</span> {personalInfo.email}</div>
+                    <div className="truncate"><span className="text-white">From:</span> {formData.name} ({formData.email})</div>
+                    <div className="truncate"><span className="text-white">Service:</span> {formData.service}</div>
+                    <div className="truncate"><span className="text-white">Scope:</span> {formData.budget}</div>
+                    <div className="pt-1 text-[#D7E2EA] line-clamp-3 italic border-t border-white/5 mt-1">
+                      "{formData.message}"
+                    </div>
                   </div>
 
+                  {/* Action Buttons */}
                   <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                     <button
+                      type="button"
+                      onClick={handleEditDetails}
+                      className="px-5 py-2.5 rounded-full border border-white/15 text-xs font-kanit uppercase tracking-wider text-[#D7E2EA] hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+                    >
+                      Edit Details
+                    </button>
+                    <button
+                      type="button"
                       onClick={handleResetForm}
-                      className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-kanit uppercase tracking-wider text-white transition-colors cursor-pointer"
+                      className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-kanit uppercase tracking-wider text-white transition-colors cursor-pointer"
                     >
                       Send Another Inquiry
-                    </button>
-                    <button
-                      onClick={handleOpenMailClient}
-                      className="px-5 py-2.5 rounded-full border border-cyan-400/40 text-xs font-kanit uppercase tracking-wider text-cyan-300 hover:bg-cyan-500/10 transition-colors cursor-pointer flex items-center gap-1.5"
-                    >
-                      <span>Open Copy In Email App</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* ERROR VIEW (with fallback) */}
-              {status === 'error' && (
-                <div className="p-6 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-center space-y-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center mx-auto text-amber-400">
-                    <AlertCircle className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-kanit font-bold text-lg text-white uppercase">
-                      Direct Dispatch Notice
-                    </h4>
-                    <p className="text-xs text-[#D7E2EA]/90 mt-1 max-w-md mx-auto">
-                      {errorMessage}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-center gap-3">
-                    <button
-                      onClick={handleOpenMailClient}
-                      className="px-6 py-2.5 rounded-full bg-cyan-500 text-black font-kanit font-bold text-xs uppercase tracking-wider hover:bg-cyan-400 transition-colors flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      <span>Send via Default Email App</span>
-                    </button>
-                    <button
-                      onClick={() => setStatus('idle')}
-                      className="px-4 py-2.5 rounded-full bg-white/10 text-xs font-kanit uppercase text-white hover:bg-white/20 transition-colors cursor-pointer"
-                    >
-                      Try Again
                     </button>
                   </div>
                 </div>
@@ -362,7 +387,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
               {/* FORM VIEW */}
               {status !== 'success' && (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="contact-name" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
@@ -374,11 +399,10 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                         type="text"
                         autoComplete="name"
                         required
-                        disabled={status === 'submitting'}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="e.g. Rahul Sharma"
-                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] placeholder-[#8E99A4]/50 text-sm focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] placeholder-[#8E99A4]/50 text-sm focus:outline-none focus:border-cyan-400 transition-colors"
                       />
                     </div>
 
@@ -392,11 +416,10 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                         type="email"
                         autoComplete="email"
                         required
-                        disabled={status === 'submitting'}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="you@company.com"
-                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] placeholder-[#8E99A4]/50 text-sm focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] placeholder-[#8E99A4]/50 text-sm focus:outline-none focus:border-cyan-400 transition-colors"
                       />
                     </div>
                   </div>
@@ -409,10 +432,9 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       <select
                         id="contact-service"
                         name="service"
-                        disabled={status === 'submitting'}
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] text-sm focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] text-sm focus:outline-none focus:border-cyan-400 transition-colors"
                       >
                         <option value="SEO & Generative Engine Optimization (GEO)">
                           SEO & Generative Engine Optimization (GEO)
@@ -442,10 +464,9 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       <select
                         id="contact-budget"
                         name="budget"
-                        disabled={status === 'submitting'}
                         value={formData.budget}
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] text-sm focus:outline-none focus:border-cyan-400 transition-colors disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] text-sm focus:outline-none focus:border-cyan-400 transition-colors"
                       >
                         <option value="Flexible / Let’s Discuss">Flexible / Let’s Discuss</option>
                         <option value="Monthly Retainer / Ongoing Work">Monthly Retainer / Ongoing</option>
@@ -463,12 +484,11 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       id="contact-message"
                       name="message"
                       required
-                      disabled={status === 'submitting'}
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Share a brief overview of your business, website URL, target timeline, or what you'd like to achieve..."
-                      className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] placeholder-[#8E99A4]/50 text-sm focus:outline-none focus:border-cyan-400 transition-colors resize-none disabled:opacity-50"
+                      className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] placeholder-[#8E99A4]/50 text-sm focus:outline-none focus:border-cyan-400 transition-colors resize-none"
                     />
                   </div>
 
@@ -480,25 +500,28 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       </span>
                     </span>
 
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.16em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      {status === 'submitting' ? (
-                        <>
-                          <Loader2 className="w-4 h-4 text-black animate-spin" />
-                          <span className="text-black font-bold">SENDING TO INBOX...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-black group-hover:text-white transition-colors">
-                            SEND INQUIRY
-                          </span>
-                          <Send className="w-3.5 h-3.5 text-black group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
-                        </>
-                      )}
-                    </button>
+                    <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                      <button
+                        type="button"
+                        onClick={handleSendGmail}
+                        className="flex-1 sm:flex-initial px-5 py-3 rounded-full bg-[#181A22] border border-cyan-500/30 hover:border-cyan-400 text-xs font-kanit font-semibold text-cyan-300 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer group"
+                        title="Open pre-filled draft in Gmail Web browser"
+                      >
+                        <Mail className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
+                        <span>VIA GMAIL</span>
+                        <ExternalLink className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity" />
+                      </button>
+
+                      <button
+                        type="submit"
+                        className="flex-1 sm:flex-initial px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.16em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                      >
+                        <span className="text-black group-hover:text-white transition-colors">
+                          SEND INQUIRY
+                        </span>
+                        <Send className="w-3.5 h-3.5 text-black group-hover:text-white group-hover:translate-x-0.5 transition-transform" />
+                      </button>
+                    </div>
                   </div>
                 </form>
               )}
