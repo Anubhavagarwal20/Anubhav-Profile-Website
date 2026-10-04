@@ -82,8 +82,8 @@ export const ExpertiseMarquee: React.FC = () => {
   return (
     <section className="relative py-12 md:py-16 overflow-hidden bg-[#0C0C0C] border-y border-[rgba(215,226,234,0.06)]">
       {/* Ambient side fade gradients for continuous cinematic look */}
-      <div className="absolute top-0 bottom-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 left-0 w-28 sm:w-48 bg-gradient-to-r from-[#0C0C0C] via-[#0C0C0C]/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-28 sm:w-48 bg-gradient-to-l from-[#0C0C0C] via-[#0C0C0C]/80 to-transparent z-10 pointer-events-none" />
 
       {/* Section Sub-Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
@@ -93,8 +93,8 @@ export const ExpertiseMarquee: React.FC = () => {
       </div>
 
       {/* Row 1: Left to Right */}
-      <div className="relative mb-5 flex overflow-hidden">
-        <div className="animate-marquee-left flex gap-5">
+      <div className="relative mb-5 flex overflow-hidden group/row">
+        <div className="animate-marquee-left flex gap-5 group-hover/row:[animation-play-state:paused]">
           {doubleRow1.map((item, index) => (
             <MarqueeCard key={`row1-${item.id}-${index}`} item={item} />
           ))}
@@ -102,8 +102,8 @@ export const ExpertiseMarquee: React.FC = () => {
       </div>
 
       {/* Row 2: Right to Left */}
-      <div className="relative flex overflow-hidden">
-        <div className="animate-marquee-right flex gap-5">
+      <div className="relative flex overflow-hidden group/row">
+        <div className="animate-marquee-right flex gap-5 group-hover/row:[animation-play-state:paused]">
           {doubleRow2.map((item, index) => (
             <MarqueeCard key={`row2-${item.id}-${index}`} item={item} />
           ))}

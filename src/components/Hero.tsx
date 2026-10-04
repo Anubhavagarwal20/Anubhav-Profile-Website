@@ -87,12 +87,14 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex items-center gap-2 text-xs font-mono text-[#8E99A4]"
+              className="flex flex-wrap items-center gap-2 text-xs font-mono text-[#8E99A4]"
             >
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Based in India</span>
-              <span className="text-white/20">•</span>
-              <span>Available for Global Roles & Consulting</span>
+              <div className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Based in India</span>
+              </div>
+              <span className="hidden sm:inline text-white/20">•</span>
+              <span className="text-[#8E99A4]/90">Available for Global Roles & Consulting</span>
             </motion.div>
           </div>
 

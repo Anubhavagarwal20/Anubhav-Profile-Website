@@ -9,13 +9,35 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+
+    const sectionIds = ['about', 'services', 'projects', 'experience', 'skills', 'gallery', 'contact'];
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const navLinks = [
@@ -65,20 +87,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center space-x-7" aria-label="Main Navigation">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="font-kanit text-[13px] font-medium tracking-[0.15em] text-[#D7E2EA]/80 hover:text-cyan-400 transition-colors duration-200 relative group py-1"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.replace('#', '');
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className={`font-kanit text-[13px] font-medium tracking-[0.15em] transition-colors duration-200 relative group py-1 ${
+                    isActive ? 'text-cyan-400 font-bold' : 'text-[#D7E2EA]/80 hover:text-cyan-400'
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
+                </a>
+              );
+            })}
           </nav>
 
-          {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Action CTAs (Desktop) */}
+          <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={onOpenResume}
               className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-[rgba(215,226,234,0.25)] text-xs font-kanit tracking-[0.12em] text-[#D7E2EA] hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all duration-200 cursor-pointer"
@@ -99,18 +130,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex sm:hidden items-center gap-2">
+          {/* Mobile & Tablet Menu Button */}
+          <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={onOpenResume}
-              className="p-2 rounded-lg border border-[rgba(215,226,234,0.2)] text-[#D7E2EA] text-xs font-kanit"
+              className="p-2 rounded-lg border border-[rgba(215,226,234,0.2)] text-[#D7E2EA] text-xs font-kanit hover:text-cyan-400 transition-colors cursor-pointer"
               aria-label="View Resume"
             >
               <FileText className="w-4 h-4 text-cyan-400" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg border border-[rgba(215,226,234,0.2)] text-[#D7E2EA] hover:text-cyan-400 hover:border-cyan-400/50 transition-colors"
+              className="p-2 rounded-lg border border-[rgba(215,226,234,0.2)] text-[#D7E2EA] hover:text-cyan-400 hover:border-cyan-400/50 transition-colors cursor-pointer"
               aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
               aria-expanded={mobileMenuOpen}
             >
@@ -120,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -128,26 +159,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="sm:hidden bg-[#0C0C0C]/98 border-b border-[rgba(215,226,234,0.15)] backdrop-blur-xl px-6 py-6"
+            className="lg:hidden bg-[#0C0C0C]/98 border-b border-[rgba(215,226,234,0.15)] backdrop-blur-xl px-6 py-6"
           >
             <div className="flex flex-col space-y-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="font-kanit text-lg tracking-[0.15em] text-[#D7E2EA] hover:text-cyan-400 transition-colors py-1"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.replace('#', '');
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`font-kanit text-lg tracking-[0.15em] transition-colors py-1 ${
+                      isActive ? 'text-cyan-400 font-bold' : 'text-[#D7E2EA] hover:text-cyan-400'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
               <div className="pt-4 border-t border-[rgba(215,226,234,0.1)] flex flex-col gap-3">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenResume();
                   }}
-                  className="w-full py-3 rounded-xl border border-[rgba(215,226,234,0.25)] text-center font-kanit text-sm tracking-[0.14em] text-[#D7E2EA] flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl border border-[rgba(215,226,234,0.25)] text-center font-kanit text-sm tracking-[0.14em] text-[#D7E2EA] flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <FileText className="w-4 h-4 text-cyan-400" />
                   VIEW RESUME

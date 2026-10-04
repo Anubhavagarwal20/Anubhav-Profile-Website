@@ -244,11 +244,14 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
+                      <label htmlFor="contact-name" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
                         Your Name *
                       </label>
                       <input
+                        id="contact-name"
+                        name="name"
                         type="text"
+                        autoComplete="name"
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -258,11 +261,14 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
+                      <label htmlFor="contact-email" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
                         Email Address *
                       </label>
                       <input
+                        id="contact-email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -274,10 +280,12 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
+                      <label htmlFor="contact-service" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
                         Service of Interest
                       </label>
                       <select
+                        id="contact-service"
+                        name="service"
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] text-sm focus:outline-none focus:border-cyan-400 transition-colors"
@@ -304,10 +312,12 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
+                      <label htmlFor="contact-budget" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
                         Project Scope / Budget
                       </label>
                       <select
+                        id="contact-budget"
+                        name="budget"
                         value={formData.budget}
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-[#181A22] border border-[rgba(215,226,234,0.12)] text-[#D7E2EA] text-sm focus:outline-none focus:border-cyan-400 transition-colors"
@@ -321,10 +331,12 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
+                    <label htmlFor="contact-message" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
                       Project Details & Objectives *
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="message"
                       required
                       rows={4}
                       value={formData.message}

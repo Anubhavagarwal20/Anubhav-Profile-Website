@@ -59,7 +59,7 @@ export const HeroVisual: React.FC = () => {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 28, ease: 'linear', repeat: Infinity }}
-          className="absolute w-[360px] h-[360px] sm:w-[420px] sm:h-[420px] rounded-full border border-cyan-400/25 border-dashed"
+          className="absolute w-[290px] h-[290px] sm:w-[420px] sm:h-[420px] rounded-full border border-cyan-400/25 border-dashed"
           style={{ transform: 'rotateX(65deg) rotateY(15deg)' }}
         >
           {/* Orbital Satellite Node */}
@@ -72,7 +72,7 @@ export const HeroVisual: React.FC = () => {
         <motion.div
           animate={{ rotate: -360 }}
           transition={{ duration: 34, ease: 'linear', repeat: Infinity }}
-          className="absolute w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] rounded-full border border-orange-500/25"
+          className="absolute w-[240px] h-[240px] sm:w-[350px] sm:h-[350px] rounded-full border border-orange-500/25"
           style={{ transform: 'rotateX(-60deg) rotateY(-25deg)' }}
         >
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3.5 h-3.5 rounded-full bg-orange-500 shadow-[0_0_14px_#FF6B00] flex items-center justify-center">
@@ -91,7 +91,7 @@ export const HeroVisual: React.FC = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_2px_20px_rgba(255,255,255,0.4),0_0_40px_rgba(0,240,255,0.25)] flex items-center justify-center overflow-hidden"
+          className="relative w-36 h-36 sm:w-56 sm:h-56 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_2px_20px_rgba(255,255,255,0.4),0_0_40px_rgba(0,240,255,0.25)] flex items-center justify-center overflow-hidden"
           style={{
             background:
               'radial-gradient(circle at 32% 28%, #FFFFFF 0%, #A6B4C0 22%, #383E48 55%, #101216 85%, #050608 100%)',
@@ -105,14 +105,14 @@ export const HeroVisual: React.FC = () => {
           <div className="absolute bottom-0 right-0 w-32 h-32 rounded-full bg-orange-500/20 blur-xl pointer-events-none" />
 
           {/* Core Symbol within Sphere */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center p-4">
-            <div className="w-12 h-12 rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center mb-1 text-cyan-300 shadow-inner">
-              <Bot className="w-6 h-6 animate-pulse" />
+          <div className="relative z-10 flex flex-col items-center justify-center text-center p-3 sm:p-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center mb-1 text-cyan-300 shadow-inner">
+              <Bot className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
             </div>
-            <span className="font-kanit font-extrabold text-[13px] tracking-[0.2em] text-white uppercase drop-shadow">
+            <span className="font-kanit font-extrabold text-xs sm:text-[13px] tracking-[0.2em] text-white uppercase drop-shadow">
               GEO CORE
             </span>
-            <span className="text-[10px] text-cyan-300/80 font-mono tracking-wider">
+            <span className="text-[9px] sm:text-[10px] text-cyan-300/80 font-mono tracking-wider">
               AI SEARCH • LLM CITATION
             </span>
           </div>
@@ -129,20 +129,20 @@ export const HeroVisual: React.FC = () => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute -top-3 right-0 sm:-right-4 z-20 bg-[#12141A]/90 backdrop-blur-xl border border-cyan-400/35 rounded-2xl p-3.5 shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(0,240,255,0.15)] max-w-[240px]"
+          className="absolute -top-3 right-0 sm:-right-4 z-20 bg-[#12141A]/90 backdrop-blur-xl border border-cyan-400/35 rounded-2xl p-2.5 sm:p-3.5 shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(0,240,255,0.15)] max-w-[200px] sm:max-w-[240px]"
         >
           <div className="flex items-center gap-2 mb-1.5">
             <div className="w-5 h-5 rounded-md bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400">
               <Search className="w-3 h-3" />
             </div>
-            <span className="text-[10px] font-kanit uppercase tracking-wider text-cyan-300 font-semibold">
+            <span className="text-[10px] font-kanit uppercase tracking-wider text-cyan-300 font-semibold truncate">
               Perplexity & ChatGPT Query
             </span>
           </div>
-          <p className="text-[11px] text-[#D7E2EA] font-medium leading-tight">
+          <p className="text-[10px] sm:text-[11px] text-[#D7E2EA] font-medium leading-tight">
             "Best AI search & GEO growth strategies"
           </p>
-          <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-[10px]">
+          <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-[9px] sm:text-[10px]">
             <span className="text-emerald-400 flex items-center gap-1 font-mono font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Cited in LLM Answer
@@ -163,7 +163,7 @@ export const HeroVisual: React.FC = () => {
             ease: 'easeInOut',
             delay: 0.5,
           }}
-          className="absolute -bottom-4 left-0 sm:-left-4 z-20 bg-[#14151C]/90 backdrop-blur-xl border border-orange-500/30 rounded-2xl p-3.5 shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(255,107,0,0.12)] max-w-[210px]"
+          className="absolute -bottom-4 left-0 sm:-left-4 z-20 bg-[#14151C]/90 backdrop-blur-xl border border-orange-500/30 rounded-2xl p-2.5 sm:p-3.5 shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(255,107,0,0.12)] max-w-[180px] sm:max-w-[210px]"
         >
           <div className="flex items-center justify-between mb-1">
             <span className="text-[10px] font-kanit uppercase tracking-wider text-orange-400 font-semibold flex items-center gap-1">

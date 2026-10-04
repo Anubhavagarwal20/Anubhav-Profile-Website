@@ -115,11 +115,11 @@ export const About: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="p-6 rounded-2xl bg-[#131418] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/40 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
+                  className="p-6 rounded-2xl bg-[#131418] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/50 hover:shadow-[0_10px_30px_rgba(0,240,255,0.08)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-mono text-xs text-[#8E99A4] tracking-widest">
+                      <span className="font-mono text-xs font-semibold text-cyan-400 tracking-widest">
                         {card.number}
                       </span>
                       <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">

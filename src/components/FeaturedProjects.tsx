@@ -11,7 +11,7 @@ export const FeaturedProjects: React.FC = () => {
   return (
     <section
       id="projects"
-      className="relative bg-[#0C0C0C] text-[#D7E2EA] pt-24 pb-32 md:pt-32 md:pb-40 rounded-t-[40px] sm:rounded-t-[60px] md:rounded-t-[80px] -mt-10 z-30"
+      className="relative bg-[#0C0C0C] text-[#D7E2EA] pt-20 pb-32 md:pt-28 md:pb-40 z-30"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
