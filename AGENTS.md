@@ -2,7 +2,7 @@
 
 > **Project**: Anubhav Agarwal Interactive Portfolio Website  
 > **Repository**: [https://github.com/Anubhavagarwal20/Anubhav-Profile-Website](https://github.com/Anubhavagarwal20/Anubhav-Profile-Website)  
-> **Production Domain**: [https://anubhavagarwal.tech](https://anubhavagarwal.tech)  
+> **Production Domain**: [https://anubhav-profile-website.vercel.app](https://anubhav-profile-website.vercel.app)  
 > **Target Roles**: Digital Marketing Strategist | SEO & GEO Specialist | E-commerce & Growth Marketing  
 
 ---

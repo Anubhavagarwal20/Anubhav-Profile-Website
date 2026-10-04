@@ -105,7 +105,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 </span>
                 <span className="flex items-center gap-1">
                   <Globe className="w-3.5 h-3.5 text-emerald-400" />
-                  anubhavagarwal.tech
+                  {personalInfo.website.replace(/^https?:\/\//, '')}
                 </span>
                 <span className="flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-orange-400" />

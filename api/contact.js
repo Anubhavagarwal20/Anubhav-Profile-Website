@@ -23,8 +23,8 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Origin: 'https://anubhavagarwal.tech',
-        Referer: 'https://anubhavagarwal.tech/',
+        Origin: 'https://anubhav-profile-website.vercel.app',
+        Referer: 'https://anubhav-profile-website.vercel.app/',
       },
       body: JSON.stringify({
         _subject: `New Portfolio Inquiry from ${name} (${service || 'General'})`,

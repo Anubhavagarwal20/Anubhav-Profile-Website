@@ -1,7 +1,7 @@
 # Anubhav Agarwal — Interactive Personal Portfolio
 
 > **Digital Marketing Strategist | SEO & GEO Specialist | E-commerce & Growth Marketing**  
-> Live Domain: [https://anubhavagarwal.tech](https://anubhavagarwal.tech)  
+> Live Domain: [https://anubhav-profile-website.vercel.app](https://anubhav-profile-website.vercel.app)  
 > LinkedIn: [linkedin.com/in/anubhavagarwal20](https://www.linkedin.com/in/anubhavagarwal20/)
 
 ---
@@ -89,7 +89,7 @@ anubhav-profile/
 ├── public/
 │   ├── favicon.svg           # Custom geometric AA brand favicon
 │   ├── robots.txt            # Search engine crawler instructions
-│   └── sitemap.xml           # XML sitemap for anubhavagarwal.tech
+│   └── sitemap.xml           # XML sitemap for search engines
 ├── src/
 │   ├── components/
 │   │   ├── About.tsx                 # Full-height About section with 4 corner visuals & philosophy

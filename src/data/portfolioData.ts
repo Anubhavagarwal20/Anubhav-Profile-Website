@@ -24,7 +24,7 @@ export const personalInfo = {
   availability: 'Available for Professional Opportunities & Freelance Projects',
   email: 'anubhavagarwal2020@gmail.com',
   linkedin: 'https://www.linkedin.com/in/anubhavagarwal20/',
-  website: 'https://anubhavagarwal.tech',
+  website: 'https://anubhav-profile-website.vercel.app',
   philosophyCards: [
     {
       number: '01',
