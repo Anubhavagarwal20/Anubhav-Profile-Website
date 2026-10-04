@@ -23,7 +23,6 @@ interface ContactProps {
 export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [copiedMessage, setCopiedMessage] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -109,13 +108,6 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     window.location.href = getMailtoUrl(finalData);
   };
 
-  const handleCopyInquiry = () => {
-    const fullText = `To: ${personalInfo.email}\nSubject: ${buildSubject(activeData)}\n\n${buildBody(activeData)}`;
-    navigator.clipboard.writeText(fullText);
-    setCopiedMessage(true);
-    setTimeout(() => setCopiedMessage(false), 2500);
-  };
-
   const handleResetForm = () => {
     setStatus('idle');
     setFormData({
@@ -132,10 +124,6 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
       budget: 'Flexible / Let’s Discuss',
       message: '',
     });
-  };
-
-  const handleEditDetails = () => {
-    setStatus('idle');
   };
 
   return (
@@ -304,109 +292,35 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
               {/* SUCCESS / DISPATCHED VIEW */}
               {status === 'success' && (
-                <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-b from-[#161A24] to-[#12141C] border border-cyan-500/30 shadow-[0_0_40px_rgba(0,240,255,0.08)] text-center space-y-6">
+                <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-b from-[#161A24] to-[#12141C] border border-cyan-500/30 shadow-[0_0_40px_rgba(0,240,255,0.08)] text-center space-y-6">
                   <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center mx-auto text-cyan-400 shadow-[0_0_25px_rgba(0,240,255,0.25)]">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
 
-                  <div>
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 text-[11px] font-mono uppercase tracking-wider mb-2">
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 text-[11px] font-mono uppercase tracking-wider">
                       <Check className="w-3 h-3" />
-                      <span>Inquiry Compiled & Ready</span>
+                      <span>Inquiry Sent Successfully</span>
                     </div>
                     <h4 className="font-kanit font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
                       Thank You, <span className="text-cyan-400 font-black">{activeData.name || 'Friend'}</span>!
                     </h4>
-                    <p className="text-xs sm:text-sm text-[#8E99A4] max-w-md mx-auto leading-relaxed mt-2">
+                    <p className="text-xs sm:text-sm text-[#8E99A4] max-w-md mx-auto leading-relaxed">
                       {activeData.name ? (
                         <>We've received your project inquiry, <strong className="text-white font-semibold">{activeData.name}</strong>. </>
                       ) : null}
-                      Your message has been compiled and addressed directly to{' '}
+                      Your message has been dispatched to{' '}
                       <strong className="text-cyan-300 font-mono font-medium">{personalInfo.email}</strong>.
-                      Your mail client was triggered. You can also send or review using the options below:
+                      Anubhav will review your details and get back to you shortly at{' '}
+                      <strong className="text-white font-mono">{activeData.email}</strong>.
                     </p>
                   </div>
 
-                  {/* Multi-Channel Quick Action Buttons */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
-                    {/* Gmail Web */}
-                    <a
-                      href={getGmailUrl()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3.5 rounded-xl bg-cyan-500/15 border border-cyan-400/40 hover:bg-cyan-500/25 text-white font-kanit font-bold text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1.5 group cursor-pointer"
-                    >
-                      <div className="flex items-center gap-1.5 text-cyan-300">
-                        <Mail className="w-4 h-4" />
-                        <span className="text-white">Gmail Web</span>
-                        <ExternalLink className="w-3 h-3 text-cyan-400" />
-                      </div>
-                      <span className="text-[10px] font-mono text-[#8E99A4] font-normal">Open in browser</span>
-                    </a>
-
-                    {/* Native Mail App */}
-                    <a
-                      href={getMailtoUrl()}
-                      className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/40 hover:bg-white/10 text-white font-kanit font-bold text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1.5 group cursor-pointer"
-                    >
-                      <div className="flex items-center gap-1.5 text-[#D7E2EA]">
-                        <Send className="w-4 h-4 text-cyan-400" />
-                        <span>Mail App</span>
-                        <ArrowUpRight className="w-3 h-3 text-[#8E99A4] group-hover:text-white" />
-                      </div>
-                      <span className="text-[10px] font-mono text-[#8E99A4] font-normal">Default client</span>
-                    </a>
-
-                    {/* Copy Inquiry */}
-                    <button
-                      type="button"
-                      onClick={handleCopyInquiry}
-                      className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-400/40 hover:bg-white/10 text-white font-kanit font-bold text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1.5 group cursor-pointer"
-                    >
-                      <div className="flex items-center gap-1.5">
-                        {copiedMessage ? (
-                          <>
-                            <Check className="w-4 h-4 text-emerald-400" />
-                            <span className="text-emerald-400 font-mono">Copied!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-4 h-4 text-[#8E99A4] group-hover:text-white" />
-                            <span className="text-[#D7E2EA]">Copy Text</span>
-                          </>
-                        )}
-                      </div>
-                      <span className="text-[10px] font-mono text-[#8E99A4] font-normal">Clipboard copy</span>
-                    </button>
-                  </div>
-
-                  {/* Summary Box */}
-                  <div className="p-4 rounded-xl bg-black/50 border border-white/10 text-left text-xs font-mono space-y-1.5 max-w-lg mx-auto text-[#8E99A4]">
-                    <div className="text-[10px] uppercase tracking-wider text-cyan-400 font-semibold mb-1">
-                      COMPILED INQUIRY SUMMARY
-                    </div>
-                    <div className="truncate"><span className="text-white">To:</span> {personalInfo.email}</div>
-                    <div className="truncate"><span className="text-white">From:</span> {activeData.name} ({activeData.email})</div>
-                    <div className="truncate"><span className="text-white">Service:</span> {activeData.service}</div>
-                    <div className="truncate"><span className="text-white">Scope:</span> {activeData.budget}</div>
-                    <div className="pt-1 text-[#D7E2EA] line-clamp-3 italic border-t border-white/5 mt-1">
-                      "{activeData.message}"
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-                    <button
-                      type="button"
-                      onClick={handleEditDetails}
-                      className="px-5 py-2.5 rounded-full border border-white/15 text-xs font-kanit uppercase tracking-wider text-[#D7E2EA] hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
-                    >
-                      Edit Details
-                    </button>
+                  <div className="pt-2 flex items-center justify-center">
                     <button
                       type="button"
                       onClick={handleResetForm}
-                      className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-kanit uppercase tracking-wider text-white transition-colors cursor-pointer"
+                      className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-kanit uppercase tracking-wider text-white transition-colors cursor-pointer"
                     >
                       Send Another Inquiry
                     </button>
