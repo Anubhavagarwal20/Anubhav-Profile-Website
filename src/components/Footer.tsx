@@ -110,11 +110,8 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#8E99A4]/60 gap-4">
+        <div className="pt-8 flex items-center justify-center text-center text-xs font-mono text-[#8E99A4]/60">
           <p>© {currentYear} Anubhav Agarwal. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Engineered with React, TypeScript & Generative Precision
-          </p>
         </div>
       </div>
     </footer>
