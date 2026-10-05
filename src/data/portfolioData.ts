@@ -16,7 +16,7 @@ export const personalInfo = {
   mainHeadline: ['MARKETING', 'MEETS', 'INTELLIGENCE.'],
   title: 'Digital Marketing Strategist | SEO & GEO Specialist | E-commerce & Growth Marketing',
   shortBio:
-    "I'm Anubhav Agarwal — a digital marketing professional working across SEO, Generative Engine Optimization, performance marketing, e-commerce, content strategy, and web experiences.",
+    "I'm Anubhav Agarwal — A Digital Marketing professional working across SEO, Performance marketing, E-commerce, Content strategy, and Web experiences.",
   positioningStatement:
     'I help brands build a stronger digital presence through search engine optimization, AI search visibility, performance marketing, content strategy, e-commerce optimization, and website development. My approach combines creative thinking, data-driven decisions, and practical execution to help businesses improve discoverability, connect with their audiences, and grow online.',
   bottomBarText: 'Turning digital strategy into meaningful online growth.',
