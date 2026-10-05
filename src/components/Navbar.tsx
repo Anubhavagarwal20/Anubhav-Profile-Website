@@ -71,16 +71,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#1E232A] to-[#121316] border border-[rgba(215,226,234,0.2)] flex items-center justify-center font-kanit font-black text-sm text-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.2)] group-hover:border-cyan-400/60 transition-colors">
               AA
             </div>
-            <div className="flex flex-col">
-              <span className="font-kanit font-extrabold text-base tracking-[0.18em] text-[#D7E2EA] group-hover:text-white transition-colors uppercase">
+            <div className="flex flex-col min-w-0">
+              <span className="font-kanit font-extrabold text-sm sm:text-base tracking-[0.12em] sm:tracking-[0.18em] text-[#D7E2EA] group-hover:text-white transition-colors uppercase truncate">
                 ANUBHAV AGARWAL
               </span>
-              <div className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-[#8E99A4]">
-                <span className="relative flex h-2 w-2">
+              <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium tracking-wide text-[#8E99A4]">
+                <span className="relative flex h-2 w-2 flex-shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
                 </span>
-                <span>SEO & GEO Specialist</span>
+                <span className="truncate">SEO & GEO Specialist</span>
               </div>
             </div>
           </a>
@@ -154,13 +154,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
       {/* Mobile & Tablet Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden bg-[#0C0C0C]/98 border-b border-[rgba(215,226,234,0.15)] backdrop-blur-xl px-6 py-6"
-          >
+          <>
+            {/* Backdrop overlay for closing drawer on tap outside */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden fixed inset-0 top-[60px] bg-black/60 backdrop-blur-sm -z-10"
+            />
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden bg-[#0C0C0C]/98 border-b border-[rgba(215,226,234,0.15)] backdrop-blur-xl px-5 sm:px-6 py-5 sm:py-6 max-h-[calc(100vh-80px)] overflow-y-auto"
+            >
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.replace('#', '');
@@ -198,7 +207,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
               </div>
             </div>
           </motion.div>
-        )}
+        </>
+      )}
       </AnimatePresence>
     </motion.header>
   );

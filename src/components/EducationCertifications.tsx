@@ -149,12 +149,12 @@ export const EducationCertifications: React.FC = () => {
               ))}
 
               {/* View Full LinkedIn Certifications Button */}
-              <div className="p-4 rounded-2xl bg-[#151720] border border-[rgba(215,226,234,0.08)] flex items-center justify-between">
-                <div>
+              <div className="p-4 rounded-2xl bg-[#151720] border border-[rgba(215,226,234,0.08)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="min-w-0">
                   <span className="text-xs font-kanit font-bold text-white block">
                     Complete Licensure & Credentials
                   </span>
-                  <span className="text-[11px] text-[#8E99A4] font-mono">
+                  <span className="text-[11px] text-[#8E99A4] font-mono block">
                     Includes 20+ additional specialized course credentials on LinkedIn
                   </span>
                 </div>
@@ -162,7 +162,7 @@ export const EducationCertifications: React.FC = () => {
                   href={allCertificationsLinkedInUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-cyan-500/20 text-xs font-kanit text-cyan-300 border border-white/10 hover:border-cyan-400/40 transition-colors flex items-center gap-1 flex-shrink-0"
+                  className="w-full sm:w-auto justify-center px-4 py-2 rounded-full bg-white/10 hover:bg-cyan-500/20 text-xs font-kanit text-cyan-300 border border-white/10 hover:border-cyan-400/40 transition-colors flex items-center gap-1.5 flex-shrink-0"
                 >
                   <span>View All</span>
                   <ExternalLink className="w-3 h-3" />

@@ -216,7 +216,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
-                className="font-kanit font-black text-4xl sm:text-5xl md:text-6xl uppercase tracking-tight hero-heading mb-6"
+                className="font-kanit font-black text-3xl sm:text-5xl md:text-6xl uppercase tracking-tight hero-heading mb-6"
               >
                 LET'S CREATE SOMETHING MEANINGFUL.
               </motion.h2>
@@ -234,13 +234,13 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
               {/* Direct Communication Channels */}
               <div className="space-y-4 mb-8">
                 {/* Email Item with 1-click copy */}
-                <div className="p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.12)] flex items-center justify-between group hover:border-cyan-400/40 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.12)] flex items-center justify-between gap-3 group hover:border-cyan-400/40 transition-colors">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 flex-shrink-0">
                       <Mail className="w-5 h-5" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-[10px] font-mono text-[#8E99A4] uppercase tracking-wider block">
                           Direct Email
                         </span>
@@ -250,7 +250,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       </div>
                       <a
                         href={`mailto:${personalInfo.email}`}
-                        className="text-sm font-kanit font-bold text-white group-hover:text-cyan-300 transition-colors"
+                        className="text-xs sm:text-sm font-kanit font-bold text-white group-hover:text-cyan-300 transition-colors truncate block"
                       >
                         {personalInfo.email}
                       </a>
@@ -259,7 +259,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
                   <button
                     onClick={handleCopyEmail}
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors cursor-pointer"
+                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors cursor-pointer flex-shrink-0"
                     title="Copy Email Address"
                   >
                     {copiedEmail ? (
@@ -273,12 +273,12 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                 </div>
 
                 {/* LinkedIn Item */}
-                <div className="p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.12)] flex items-center justify-between group hover:border-blue-500/40 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.12)] flex items-center justify-between gap-3 group hover:border-blue-500/40 transition-colors">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
                       <LinkedinIcon className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <span className="text-[10px] font-mono text-[#8E99A4] uppercase tracking-wider block">
                         Professional Network
                       </span>
@@ -286,7 +286,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                         href={personalInfo.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-kanit font-bold text-white group-hover:text-blue-300 transition-colors"
+                        className="text-xs sm:text-sm font-kanit font-bold text-white group-hover:text-blue-300 transition-colors truncate block"
                       >
                         linkedin.com/in/anubhavagarwal20
                       </a>
@@ -297,7 +297,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                     href={personalInfo.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors"
+                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors flex-shrink-0"
                     aria-label="Visit LinkedIn Profile"
                   >
                     <ExternalLink className="w-4 h-4" />
@@ -305,9 +305,9 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                 </div>
 
                 {/* Location & Resume row */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.08)] flex items-center gap-3">
-                    <MapPin className="w-4 h-4 text-orange-400" />
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
+                  <div className="p-3.5 sm:p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.08)] flex items-center gap-3">
+                    <MapPin className="w-4 h-4 text-orange-400 flex-shrink-0" />
                     <span className="text-xs font-kanit text-[#D7E2EA]">
                       Based in India
                     </span>
@@ -315,7 +315,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
 
                   <button
                     onClick={onOpenResume}
-                    className="p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.08)] hover:border-cyan-400/40 transition-colors flex items-center justify-between text-xs font-kanit text-cyan-400 cursor-pointer"
+                    className="p-3.5 sm:p-4 rounded-2xl bg-[#14161F] border border-[rgba(215,226,234,0.08)] hover:border-cyan-400/40 transition-colors flex items-center justify-between text-xs font-kanit text-cyan-400 cursor-pointer"
                   >
                     <span className="flex items-center gap-2">
                       <FileText className="w-4 h-4" />
@@ -335,18 +335,18 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="p-8 sm:p-10 rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.15)] shadow-2xl relative"
+              className="p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.15)] shadow-2xl relative"
             >
-              <div className="mb-6 pb-4 border-b border-white/10 flex items-center justify-between">
+              <div className="mb-6 pb-4 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h3 className="font-kanit font-extrabold text-2xl text-white uppercase tracking-tight">
+                  <h3 className="font-kanit font-extrabold text-xl sm:text-2xl text-white uppercase tracking-tight">
                     Start a Conversation
                   </h3>
                   <p className="text-xs text-[#8E99A4] mt-0.5">
                     Messages are delivered directly to <span className="text-cyan-400 font-mono font-medium">{personalInfo.email}</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-xs font-mono">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-xs font-mono self-start sm:self-auto">
                   <Mail className="w-3.5 h-3.5" />
                   <span>Direct Delivery</span>
                 </div>
@@ -497,7 +497,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2">
                     <span className="text-[11px] font-mono text-[#8E99A4] flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
                       <span>
@@ -505,11 +505,11 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       </span>
                     </span>
 
-                    <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                    <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2.5 w-full sm:w-auto">
                       <button
                         type="button"
                         onClick={handleSendGmail}
-                        className="flex-1 sm:flex-initial px-5 py-3 rounded-full bg-[#181A22] border border-cyan-500/30 hover:border-cyan-400 text-xs font-kanit font-semibold text-cyan-300 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer group"
+                        className="w-full xs:w-auto px-5 py-3 rounded-full bg-[#181A22] border border-cyan-500/30 hover:border-cyan-400 text-xs font-kanit font-semibold text-cyan-300 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer group"
                         title="Open pre-filled draft in Gmail Web browser"
                       >
                         <Mail className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
@@ -520,7 +520,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       <button
                         type="submit"
                         disabled={status === 'submitting'}
-                        className="flex-1 sm:flex-initial px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.16em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
+                        className="w-full xs:w-auto px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.16em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
                       >
                         {status === 'submitting' ? (
                           <>

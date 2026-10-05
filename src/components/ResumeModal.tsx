@@ -52,21 +52,21 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="relative w-full max-w-4xl bg-[#121318] border border-[rgba(215,226,234,0.2)] rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
+          className="relative w-full max-w-4xl bg-[#121318] border border-[rgba(215,226,234,0.2)] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
         >
           {/* Header Controls */}
-          <div className="p-4 sm:p-6 border-b border-[rgba(215,226,234,0.1)] flex items-center justify-between bg-[#151720]">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="font-kanit font-bold text-sm uppercase tracking-wider text-white">
+          <div className="p-3.5 sm:p-6 border-b border-[rgba(215,226,234,0.1)] flex items-center justify-between bg-[#151720] gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse flex-shrink-0" />
+              <span className="font-kanit font-bold text-xs sm:text-sm uppercase tracking-wider text-white truncate">
                 Executive Profile & Verified Resume
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 flex-shrink-0">
               <button
                 onClick={handlePrint}
-                className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-400/30 text-cyan-400 font-kanit text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-3 sm:px-3.5 py-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-400/30 text-cyan-400 font-kanit text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5 cursor-pointer"
                 title="Print or Save as PDF"
               >
                 <Printer className="w-3.5 h-3.5" />
@@ -84,31 +84,31 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           </div>
 
           {/* Printable Resume Sheet */}
-          <div className="p-6 sm:p-10 overflow-y-auto space-y-8 text-[#D7E2EA] bg-[#0E0F14]">
+          <div className="p-4 sm:p-8 md:p-10 overflow-y-auto space-y-6 sm:space-y-8 text-[#D7E2EA] bg-[#0E0F14]">
             {/* Top Identity Block */}
-            <div className="border-b border-white/15 pb-6">
-              <h1 className="font-kanit font-black text-3xl sm:text-4xl text-white tracking-tight uppercase">
+            <div className="border-b border-white/15 pb-5 sm:pb-6">
+              <h1 className="font-kanit font-black text-2xl sm:text-4xl text-white tracking-tight uppercase">
                 {personalInfo.name}
               </h1>
-              <p className="font-kanit font-semibold text-sm sm:text-base text-cyan-400 mt-1">
+              <p className="font-kanit font-semibold text-xs sm:text-base text-cyan-400 mt-1">
                 {personalInfo.title}
               </p>
 
-              <div className="flex flex-wrap gap-4 text-xs font-mono text-[#8E99A4] mt-3">
-                <span className="flex items-center gap-1">
-                  <Mail className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="flex flex-wrap gap-2.5 sm:gap-4 text-xs font-mono text-[#8E99A4] mt-3">
+                <span className="flex items-center gap-1 break-all sm:break-normal">
+                  <Mail className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
                   {personalInfo.email}
                 </span>
-                <span className="flex items-center gap-1">
-                  <LinkedinIcon className="w-3.5 h-3.5 text-blue-400" />
+                <span className="flex items-center gap-1 break-all sm:break-normal">
+                  <LinkedinIcon className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
                   linkedin.com/in/anubhavagarwal20
                 </span>
-                <span className="flex items-center gap-1">
-                  <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="flex items-center gap-1 break-all sm:break-normal">
+                  <Globe className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                   {personalInfo.website.replace(/^https?:\/\//, '')}
                 </span>
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-orange-400" />
+                  <MapPin className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
                   India
                 </span>
               </div>

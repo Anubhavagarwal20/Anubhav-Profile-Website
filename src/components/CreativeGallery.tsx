@@ -60,12 +60,12 @@ export const CreativeGallery: React.FC = () => {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-10 sm:mb-14 px-1">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedFilter(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-kanit tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-kanit tracking-wider uppercase transition-all duration-200 cursor-pointer ${
                 selectedFilter === cat
                   ? 'bg-cyan-500 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                   : 'bg-[#15171F] border border-[rgba(215,226,234,0.1)] text-[#D7E2EA]/70 hover:text-white hover:border-cyan-400/40'
@@ -77,7 +77,7 @@ export const CreativeGallery: React.FC = () => {
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredItems.map((item, idx) => (
             <motion.div
               key={item.id}

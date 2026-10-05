@@ -31,11 +31,16 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
   background-color: #0C0C0C;
   color: #D7E2EA;
   font-family: var(--font-sans);
@@ -43,6 +48,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+img, svg, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, span, button {
+  overflow-wrap: break-word;
+}
+
 
 /* Kanit font utility */
 .font-kanit {

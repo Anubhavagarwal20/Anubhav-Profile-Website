@@ -64,10 +64,10 @@ export const SkillsTools: React.FC = () => {
         </div>
 
         {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-10 sm:mb-14 px-1">
           <button
             onClick={() => setActiveCategory('all')}
-            className={`px-4 py-2 rounded-full text-xs font-kanit tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-kanit tracking-wider uppercase transition-all duration-200 cursor-pointer ${
               activeCategory === 'all'
                 ? 'bg-cyan-500 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                 : 'bg-[#15171F] border border-[rgba(215,226,234,0.1)] text-[#D7E2EA]/70 hover:text-white hover:border-cyan-400/40'
@@ -79,7 +79,7 @@ export const SkillsTools: React.FC = () => {
             <button
               key={group.id}
               onClick={() => setActiveCategory(group.id)}
-              className={`px-4 py-2 rounded-full text-xs font-kanit tracking-wider uppercase transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-kanit tracking-wider uppercase transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
                 activeCategory === group.id
                   ? 'bg-cyan-500 text-black font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)]'
                   : 'bg-[#15171F] border border-[rgba(215,226,234,0.1)] text-[#D7E2EA]/70 hover:text-white hover:border-cyan-400/40'
@@ -92,7 +92,7 @@ export const SkillsTools: React.FC = () => {
         </div>
 
         {/* Skills Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16 sm:mb-20">
           {filteredSkillGroups.map((group, idx) => (
             <motion.div
               key={group.id}
@@ -100,30 +100,30 @@ export const SkillsTools: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.08 }}
-              className="p-6 sm:p-7 rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/40 transition-all duration-300 flex flex-col justify-between group shadow-xl hover:-translate-y-1"
+              className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/40 transition-all duration-300 flex flex-col justify-between group shadow-xl hover:-translate-y-1"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                     {categoryIcons[group.id]}
                   </div>
-                  <span className="font-mono text-[11px] text-[#8E99A4]">
+                  <span className="font-mono text-[10px] sm:text-[11px] text-[#8E99A4]">
                     {group.skills.length} Capabilities
                   </span>
                 </div>
 
-                <h3 className="font-kanit font-bold text-xl text-white mb-2 leading-snug group-hover:text-cyan-300 transition-colors">
+                <h3 className="font-kanit font-bold text-lg sm:text-xl text-white mb-2 leading-snug group-hover:text-cyan-300 transition-colors">
                   {group.title}
                 </h3>
-                <p className="text-xs text-[#8E99A4] mb-6 leading-relaxed">
+                <p className="text-xs text-[#8E99A4] mb-5 sm:mb-6 leading-relaxed">
                   {group.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2.5 py-1 rounded-md bg-[#181A22] border border-white/5 text-[11px] font-kanit tracking-wide text-[#D7E2EA]/90 group-hover:border-white/10 transition-colors"
+                      className="px-2.5 py-1 rounded-md bg-[#181A22] border border-white/5 text-[10px] sm:text-[11px] font-kanit tracking-wide text-[#D7E2EA]/90 group-hover:border-white/10 transition-colors"
                     >
                       {skill}
                     </span>
@@ -135,14 +135,14 @@ export const SkillsTools: React.FC = () => {
         </div>
 
         {/* Verified Tools Showcase */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#14161E] via-[#101217] to-[#14161E] border border-[rgba(215,226,234,0.15)] shadow-2xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
+        <div className="p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#14161E] via-[#101217] to-[#14161E] border border-[rgba(215,226,234,0.15)] shadow-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 pb-5 sm:pb-6 border-b border-white/10">
             <div>
               <div className="flex items-center gap-2 mb-1 text-cyan-400 font-kanit font-bold text-xs uppercase tracking-widest">
                 <Wrench className="w-4 h-4" />
                 Verified Platforms & Workflows
               </div>
-              <h3 className="font-kanit font-extrabold text-2xl sm:text-3xl text-white uppercase tracking-tight">
+              <h3 className="font-kanit font-extrabold text-xl sm:text-3xl text-white uppercase tracking-tight">
                 Software & Tool Ecosystem
               </h3>
             </div>
@@ -156,11 +156,11 @@ export const SkillsTools: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5 sm:gap-3">
             {verifiedToolsList.map((tool) => (
               <div
                 key={tool.name}
-                className="p-3.5 rounded-2xl bg-[#171922] border border-[rgba(215,226,234,0.08)] hover:border-cyan-400/40 hover:bg-[#1C1F2B] transition-all flex flex-col justify-between group"
+                className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#171922] border border-[rgba(215,226,234,0.08)] hover:border-cyan-400/40 hover:bg-[#1C1F2B] transition-all flex flex-col justify-between group"
               >
                 <div>
                   <span className="text-[9px] font-mono text-[#8E99A4] uppercase tracking-wider block mb-1">

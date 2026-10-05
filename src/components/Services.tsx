@@ -13,11 +13,11 @@ export const Services: React.FC = () => {
   return (
     <section
       id="services"
-      className="relative bg-white text-[#0C0C0C] py-24 md:py-36 rounded-t-[40px] sm:rounded-t-[60px] md:rounded-t-[80px] rounded-b-[40px] sm:rounded-b-[60px] md:rounded-b-[80px] shadow-2xl z-20 overflow-hidden"
+      className="relative bg-white text-[#0C0C0C] py-16 sm:py-24 md:py-36 rounded-t-[32px] sm:rounded-t-[60px] md:rounded-t-[80px] rounded-b-[32px] sm:rounded-b-[60px] md:rounded-b-[80px] shadow-2xl z-20 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 pb-8 border-b border-[#0C0C0C]/10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 md:mb-24 pb-6 sm:pb-8 border-b border-[#0C0C0C]/10 gap-6">
           <div>
             <motion.p
               initial={{ opacity: 0, y: 10 }}
@@ -33,7 +33,7 @@ export const Services: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="font-kanit font-black text-4xl sm:text-6xl md:text-7xl uppercase tracking-tight text-[#0C0C0C]"
+              className="font-kanit font-black text-3xl sm:text-6xl md:text-7xl uppercase tracking-tight text-[#0C0C0C]"
             >
               WHAT I DO
             </motion.h2>
@@ -62,15 +62,15 @@ export const Services: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.08 }}
-                className="group py-8 md:py-12 transition-colors duration-300 hover:bg-[#0C0C0C]/[0.02]"
+                className="group py-6 sm:py-8 md:py-12 transition-colors duration-300 hover:bg-[#0C0C0C]/[0.02]"
               >
                 <div
                   onClick={() => toggleExpand(service.id)}
-                  className="cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-6 items-start select-none"
+                  className="cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start select-none"
                 >
                   {/* Oversized Number Column */}
                   <div className="lg:col-span-2 flex items-center justify-between lg:justify-start">
-                    <span className="font-kanit font-black text-4xl sm:text-5xl md:text-6xl text-[#0C0C0C]/25 group-hover:text-[#0C0C0C] transition-colors duration-300">
+                    <span className="font-kanit font-black text-3xl sm:text-5xl md:text-6xl text-[#0C0C0C]/25 group-hover:text-[#0C0C0C] transition-colors duration-300">
                       {service.id}
                     </span>
                     {/* Mobile toggle button */}
@@ -83,9 +83,9 @@ export const Services: React.FC = () => {
                   </div>
 
                   {/* Title and Summary Column */}
-                  <div className="lg:col-span-8 flex flex-col pr-4">
+                  <div className="lg:col-span-8 flex flex-col pr-0 sm:pr-4">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="font-kanit font-bold text-2xl sm:text-3xl text-[#0C0C0C] group-hover:translate-x-1 transition-transform duration-300">
+                      <h3 className="font-kanit font-bold text-xl sm:text-2xl md:text-3xl text-[#0C0C0C] group-hover:translate-x-1 transition-transform duration-300">
                         {service.title}
                       </h3>
                     </div>
@@ -116,7 +116,7 @@ export const Services: React.FC = () => {
                       transition={{ duration: 0.35, ease: 'easeInOut' }}
                       className="overflow-hidden mt-6 pt-6 border-t border-[#0C0C0C]/10"
                     >
-                      <div className="bg-[#0C0C0C]/[0.03] rounded-2xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="bg-[#0C0C0C]/[0.03] rounded-2xl p-4 sm:p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                         {/* Left: Detailed Strategy & Deliverables */}
                         <div>
                           <div className="flex items-center gap-2 mb-3">

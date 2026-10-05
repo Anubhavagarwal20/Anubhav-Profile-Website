@@ -31,7 +31,7 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose }) =
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-2.5 sm:p-6 md:p-8 overflow-y-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -47,21 +47,21 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose }) =
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="relative w-full max-w-3xl bg-[#121319] border border-[rgba(215,226,234,0.18)] rounded-3xl shadow-2xl overflow-hidden z-10 my-auto"
+          className="relative w-full max-w-3xl bg-[#121319] border border-[rgba(215,226,234,0.18)] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
         >
           {/* Header */}
-          <div className="p-6 border-b border-[rgba(215,226,234,0.1)] flex items-start justify-between bg-[#151720]">
-            <div>
+          <div className="p-4 sm:p-6 border-b border-[rgba(215,226,234,0.1)] flex items-start justify-between bg-[#151720] gap-4">
+            <div className="min-w-0 flex-1">
               <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest block mb-1">
                 {item.category} • {item.format}
               </span>
-              <h3 className="font-kanit font-extrabold text-xl sm:text-2xl text-white">
+              <h3 className="font-kanit font-extrabold text-lg sm:text-2xl text-white">
                 {item.title}
               </h3>
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors cursor-pointer flex-shrink-0"
               aria-label="Close Preview"
             >
               <X className="w-5 h-5" />
@@ -69,8 +69,8 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose }) =
           </div>
 
           {/* Visual Showcase Stage */}
-          <div className="p-6 sm:p-8 space-y-6">
-            <div className="rounded-2xl bg-gradient-to-br from-[#181B26] via-[#101218] to-[#161822] border border-cyan-400/20 p-8 sm:p-12 shadow-inner text-center relative overflow-hidden">
+          <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 overflow-y-auto">
+            <div className="rounded-2xl bg-gradient-to-br from-[#181B26] via-[#101218] to-[#161822] border border-cyan-400/20 p-6 sm:p-10 md:p-12 shadow-inner text-center relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-3xl pointer-events-none" />
               <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center mx-auto mb-4 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]">
                 <Layers className="w-8 h-8" />

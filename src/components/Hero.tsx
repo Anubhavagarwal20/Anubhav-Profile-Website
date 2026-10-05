@@ -40,9 +40,9 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="font-kanit font-black tracking-[-0.03em] leading-[0.88] uppercase mb-6"
+              className="font-kanit font-black tracking-[-0.03em] leading-[0.9] sm:leading-[0.88] uppercase mb-6"
               style={{
-                fontSize: 'clamp(3.2rem, 8.5vw, 6.8rem)',
+                fontSize: 'clamp(2.1rem, 7.5vw, 6.8rem)',
               }}
             >
               <span className="block hero-heading drop-shadow-sm">MARKETING</span>
@@ -115,16 +115,16 @@ export const Hero: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.7 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12 pt-8 border-t border-[rgba(215,226,234,0.1)] flex flex-col sm:flex-row items-center justify-between gap-6"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12 pt-8 border-t border-[rgba(215,226,234,0.1)] flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left"
       >
-        <p className="font-kanit text-sm tracking-[0.12em] text-[#8E99A4] uppercase text-center sm:text-left">
+        <p className="font-kanit text-xs sm:text-sm tracking-[0.12em] text-[#8E99A4] uppercase">
           {personalInfo.bottomBarText}
         </p>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col xs:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
           <a
             href="#projects"
-            className="flex items-center gap-1.5 text-xs font-kanit tracking-[0.14em] uppercase text-[#D7E2EA]/70 hover:text-cyan-400 transition-colors py-2 px-3"
+            className="w-full xs:w-auto flex items-center justify-center gap-1.5 text-xs font-kanit tracking-[0.14em] uppercase text-[#D7E2EA]/70 hover:text-cyan-400 transition-colors py-2 px-3"
           >
             <span>EXPLORE MY WORK</span>
             <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
@@ -132,7 +132,7 @@ export const Hero: React.FC = () => {
 
           <a
             href="#contact"
-            className="px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.15em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center gap-2 group cursor-pointer"
+            className="w-full xs:w-auto px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.15em] uppercase hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2 group cursor-pointer"
           >
             <span className="text-black group-hover:text-white transition-colors">
               LET'S WORK TOGETHER

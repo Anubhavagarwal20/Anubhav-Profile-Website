@@ -37,7 +37,7 @@ const MarqueeCard: React.FC<MarqueeCardProps> = ({ item }) => {
 
   return (
     <div
-      className={`group relative flex-shrink-0 w-[300px] sm:w-[340px] p-5 rounded-2xl bg-[#131418]/90 backdrop-blur-md border border-[rgba(215,226,234,0.12)] transition-all duration-300 hover:-translate-y-1.5 cursor-default ${accentStyles.border} ${accentStyles.glow}`}
+      className={`group relative flex-shrink-0 w-[270px] sm:w-[320px] md:w-[340px] p-4 sm:p-5 rounded-2xl bg-[#131418]/90 backdrop-blur-md border border-[rgba(215,226,234,0.12)] transition-all duration-300 hover:-translate-y-1.5 cursor-default ${accentStyles.border} ${accentStyles.glow}`}
     >
       {/* Top row: Category & Badge */}
       <div className="flex items-center justify-between gap-2 mb-3">
@@ -82,8 +82,8 @@ export const ExpertiseMarquee: React.FC = () => {
   return (
     <section className="relative py-12 md:py-16 overflow-hidden bg-[#0C0C0C] border-y border-[rgba(215,226,234,0.06)]">
       {/* Ambient side fade gradients for continuous cinematic look */}
-      <div className="absolute top-0 bottom-0 left-0 w-28 sm:w-48 bg-gradient-to-r from-[#0C0C0C] via-[#0C0C0C]/80 to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-28 sm:w-48 bg-gradient-to-l from-[#0C0C0C] via-[#0C0C0C]/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 left-0 w-8 sm:w-28 md:w-48 bg-gradient-to-r from-[#0C0C0C] via-[#0C0C0C]/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-28 md:w-48 bg-gradient-to-l from-[#0C0C0C] via-[#0C0C0C]/80 to-transparent z-10 pointer-events-none" />
 
       {/* Section Sub-Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">

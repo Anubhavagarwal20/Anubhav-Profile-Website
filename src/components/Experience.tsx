@@ -51,7 +51,7 @@ export const Experience: React.FC = () => {
         </div>
 
         {/* Timeline Container with Center Glowing Spine */}
-        <div className="relative border-l border-[rgba(215,226,234,0.12)] ml-4 sm:ml-8 md:ml-32 space-y-12">
+        <div className="relative border-l border-[rgba(215,226,234,0.12)] ml-2.5 sm:ml-8 md:ml-20 lg:ml-28 space-y-8 sm:space-y-12">
           {professionalExperience.map((exp, idx) => (
             <motion.div
               key={exp.id}
@@ -59,38 +59,38 @@ export const Experience: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, delay: idx * 0.08 }}
-              className="relative pl-6 sm:pl-10 group"
+              className="relative pl-4 sm:pl-8 md:pl-10 group"
             >
               {/* Timeline Marker Dot */}
               <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#121318] border-2 border-cyan-400 group-hover:bg-cyan-400 group-hover:shadow-[0_0_15px_#00F0FF] transition-all duration-300" />
 
               {/* Card Container */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/40 transition-all duration-300 shadow-xl group-hover:shadow-[0_10px_35px_rgba(0,0,0,0.5)]">
+              <div className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/40 transition-all duration-300 shadow-xl group-hover:shadow-[0_10px_35px_rgba(0,0,0,0.5)]">
                 {/* Header: Dates, Location, Type */}
-                <div className="flex flex-wrap items-center justify-between gap-3 mb-3 text-xs font-mono text-[#8E99A4]">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+                <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-3 text-xs font-mono text-[#8E99A4]">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <Calendar className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
                     <span className="text-[#D7E2EA] font-medium">{exp.period}</span>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#8E99A4]" />
+                      <MapPin className="w-3 h-3 text-[#8E99A4] flex-shrink-0" />
                       {exp.location}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] text-cyan-300">
+                    <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] sm:text-[11px] text-cyan-300">
                       {exp.arrangement}
                     </span>
                   </div>
                 </div>
 
                 {/* Role and Organization */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-3">
-                  <h3 className="font-kanit font-extrabold text-2xl sm:text-3xl text-white group-hover:text-cyan-300 transition-colors">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-2 mb-3">
+                  <h3 className="font-kanit font-extrabold text-xl sm:text-2xl md:text-3xl text-white group-hover:text-cyan-300 transition-colors">
                     {exp.role}
                   </h3>
                   <div className="flex items-center gap-2">
-                    <span className="font-kanit font-semibold text-lg text-cyan-400">
+                    <span className="font-kanit font-semibold text-base sm:text-lg text-cyan-400">
                       {exp.organization}
                     </span>
                     {exp.websiteUrl && (
@@ -173,15 +173,15 @@ export const Experience: React.FC = () => {
         <div className="mt-16 text-center">
           <button
             onClick={() => setExpandedLeadership(!expandedLeadership)}
-            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#15171F] hover:bg-[#1C1F2A] border border-[rgba(215,226,234,0.2)] hover:border-cyan-400/50 text-xs sm:text-sm font-kanit tracking-[0.14em] uppercase text-white transition-all duration-300 shadow-lg cursor-pointer"
+            className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-3.5 rounded-full bg-[#15171F] hover:bg-[#1C1F2A] border border-[rgba(215,226,234,0.2)] hover:border-cyan-400/50 text-xs sm:text-sm font-kanit tracking-[0.14em] uppercase text-white transition-all duration-300 shadow-lg cursor-pointer"
           >
-            <Award className="w-4 h-4 text-cyan-400" />
-            <span>
+            <Award className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+            <span className="truncate">
               {expandedLeadership
-                ? 'Hide Leadership & Campus Experience'
-                : 'View Leadership, Creative Work & Campus Experience (5)'}
+                ? 'Hide Leadership & Campus Roles'
+                : 'Leadership & Campus Roles (5)'}
             </span>
-            {expandedLeadership ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            {expandedLeadership ? <ChevronUp className="w-4 h-4 flex-shrink-0" /> : <ChevronDown className="w-4 h-4 flex-shrink-0" />}
           </button>
 
           <AnimatePresence>
@@ -191,11 +191,11 @@ export const Experience: React.FC = () => {
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.4 }}
-                className="mt-10 overflow-hidden text-left"
+                className="mt-8 sm:mt-10 overflow-hidden text-left"
               >
-                <div className="p-6 sm:p-8 rounded-3xl bg-[#12141A] border border-[rgba(215,226,234,0.15)] shadow-2xl space-y-6">
-                  <div className="border-b border-white/10 pb-4 mb-6">
-                    <h3 className="font-kanit font-extrabold text-2xl text-white uppercase tracking-tight">
+                <div className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-[#12141A] border border-[rgba(215,226,234,0.15)] shadow-2xl space-y-6">
+                  <div className="border-b border-white/10 pb-4 mb-4 sm:mb-6">
+                    <h3 className="font-kanit font-extrabold text-xl sm:text-2xl text-white uppercase tracking-tight">
                       Leadership, Event Operations & Design Roles
                     </h3>
                     <p className="text-xs text-[#8E99A4] mt-1 font-mono">

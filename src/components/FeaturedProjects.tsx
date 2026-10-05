@@ -61,7 +61,7 @@ export const FeaturedProjects: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
-                className="sticky top-24 md:top-28 rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.15)] shadow-[0_20px_60px_rgba(0,0,0,0.85)] p-6 sm:p-8 lg:p-12 overflow-hidden group"
+                className="sticky top-20 sm:top-24 md:top-28 rounded-2xl sm:rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.15)] shadow-[0_20px_60px_rgba(0,0,0,0.85)] p-4 sm:p-8 lg:p-12 overflow-hidden group"
               >
                 {/* Subtle top ambient glow inside card */}
                 <div
@@ -77,7 +77,7 @@ export const FeaturedProjects: React.FC = () => {
                     <div>
                       {/* Top Bar: Number & Category */}
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="font-kanit font-black text-3xl sm:text-4xl text-white/30 group-hover:text-white/60 transition-colors">
+                        <span className="font-kanit font-black text-2xl sm:text-4xl text-white/30 group-hover:text-white/60 transition-colors">
                           {project.id}
                         </span>
                         <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-cyan-300">
@@ -89,11 +89,11 @@ export const FeaturedProjects: React.FC = () => {
                         {project.category}
                       </span>
 
-                      <h3 className="font-kanit font-extrabold text-3xl sm:text-4xl text-white mb-3 tracking-tight">
+                      <h3 className="font-kanit font-extrabold text-2xl sm:text-4xl text-white mb-3 tracking-tight">
                         {project.title}
                       </h3>
 
-                      <h4 className="text-base sm:text-lg text-cyan-200/90 font-medium mb-4 leading-snug">
+                      <h4 className="text-sm sm:text-lg text-cyan-200/90 font-medium mb-4 leading-snug">
                         {project.headline}
                       </h4>
 
@@ -102,11 +102,11 @@ export const FeaturedProjects: React.FC = () => {
                       </p>
 
                       {/* Tag Pills */}
-                      <div className="flex flex-wrap gap-2 mb-8">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-8">
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="px-3 py-1 rounded-lg bg-[#181A22] border border-[rgba(215,226,234,0.08)] text-[11px] font-kanit tracking-wider text-[#D7E2EA]/80"
+                            className="px-2.5 sm:px-3 py-1 rounded-lg bg-[#181A22] border border-[rgba(215,226,234,0.08)] text-[10px] sm:text-[11px] font-kanit tracking-wider text-[#D7E2EA]/80"
                           >
                             {tag}
                           </span>
@@ -115,10 +115,10 @@ export const FeaturedProjects: React.FC = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-[rgba(215,226,234,0.08)]">
+                    <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 pt-4 border-t border-[rgba(215,226,234,0.08)]">
                       <button
                         onClick={() => setActiveProject(project)}
-                        className="px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.14em] uppercase hover:shadow-[0_0_20px_rgba(0,240,255,0.35)] transition-all flex items-center gap-2 cursor-pointer"
+                        className="w-full xs:w-auto justify-center px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-black font-kanit font-bold text-xs tracking-[0.14em] uppercase hover:shadow-[0_0_20px_rgba(0,240,255,0.35)] transition-all flex items-center gap-2 cursor-pointer"
                       >
                         <span>VIEW CASE STUDY</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -129,7 +129,7 @@ export const FeaturedProjects: React.FC = () => {
                           href={project.externalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 rounded-full border border-[rgba(215,226,234,0.2)] hover:border-cyan-400/50 hover:bg-white/5 text-xs font-kanit tracking-wider text-[#D7E2EA] transition-all flex items-center gap-1.5"
+                          className="w-full xs:w-auto justify-center px-4 py-2 rounded-full border border-[rgba(215,226,234,0.2)] hover:border-cyan-400/50 hover:bg-white/5 text-xs font-kanit tracking-wider text-[#D7E2EA] transition-all flex items-center gap-1.5"
                         >
                           <span>{project.externalLabel || 'Live Site'}</span>
                           <ExternalLink className="w-3 h-3 text-[#8E99A4]" />

@@ -31,7 +31,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-2.5 sm:p-6 md:p-8 overflow-y-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -47,29 +47,29 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="relative w-full max-w-4xl bg-[#121318] border border-[rgba(215,226,234,0.18)] rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[90vh] flex flex-col my-auto"
+          className="relative w-full max-w-4xl bg-[#121318] border border-[rgba(215,226,234,0.18)] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
         >
           {/* Header */}
-          <div className="p-6 sm:p-8 border-b border-[rgba(215,226,234,0.1)] flex items-start justify-between bg-[#15171F]">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
+          <div className="p-4 sm:p-6 md:p-8 border-b border-[rgba(215,226,234,0.1)] flex items-start justify-between bg-[#15171F] gap-4">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="font-kanit font-bold text-xs uppercase tracking-widest text-cyan-400">
                   {project.category}
                 </span>
                 <span className="text-white/20">•</span>
                 <span className="text-xs font-mono text-[#8E99A4]">{project.caseStudy.verifiedStatus}</span>
               </div>
-              <h2 className="font-kanit font-extrabold text-2xl sm:text-4xl text-white tracking-tight">
+              <h2 className="font-kanit font-extrabold text-xl sm:text-3xl md:text-4xl text-white tracking-tight">
                 {project.title}
               </h2>
-              <p className="text-sm sm:text-base text-cyan-200/90 font-light mt-1">
+              <p className="text-xs sm:text-base text-cyan-200/90 font-light mt-1">
                 {project.headline}
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-[#8E99A4] hover:text-white transition-colors cursor-pointer flex-shrink-0"
               aria-label="Close Case Study"
             >
               <X className="w-5 h-5" />
@@ -77,7 +77,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
 
           {/* Body Content */}
-          <div className="p-6 sm:p-8 overflow-y-auto space-y-8 text-[#D7E2EA]">
+          <div className="p-4 sm:p-6 md:p-8 overflow-y-auto space-y-6 sm:space-y-8 text-[#D7E2EA]">
             {/* The Challenge & Objective Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-5 rounded-2xl bg-[#171922] border border-[rgba(215,226,234,0.08)]">
@@ -203,7 +203,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
 
           {/* Footer CTAs */}
-          <div className="p-5 sm:p-6 border-t border-[rgba(215,226,234,0.1)] bg-[#101217] flex flex-wrap items-center justify-between gap-4">
+          <div className="p-4 sm:p-6 border-t border-[rgba(215,226,234,0.1)] bg-[#101217] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((tag) => (
                 <span
@@ -215,13 +215,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               ))}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto">
               {project.externalUrl && (
                 <a
                   href={project.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-400/30 text-cyan-400 font-kanit font-semibold text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5"
+                  className="flex-1 sm:flex-initial justify-center px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-400/30 text-cyan-400 font-kanit font-semibold text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5"
                 >
                   <span>{project.externalLabel || 'Visit Platform'}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -229,7 +229,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               )}
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-kanit text-xs tracking-wider uppercase transition-colors cursor-pointer"
+                className="flex-1 sm:flex-initial justify-center px-5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-kanit text-xs tracking-wider uppercase transition-colors cursor-pointer"
               >
                 Close
               </button>
