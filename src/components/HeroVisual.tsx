@@ -105,15 +105,15 @@ export const HeroVisual: React.FC = () => {
           <div className="absolute bottom-0 right-0 w-32 h-32 rounded-full bg-orange-500/20 blur-xl pointer-events-none" />
 
           {/* Core Symbol within Sphere */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center p-3 sm:p-4">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-2 py-3 sm:p-4 max-w-full">
             <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center mb-1 text-cyan-300 shadow-inner">
               <Bot className="w-4 h-4 sm:w-6 sm:h-6 animate-pulse" />
             </div>
-            <span className="font-kanit font-extrabold text-[11px] sm:text-[13px] tracking-[0.2em] text-white uppercase drop-shadow">
-              GEO CORE
+            <span className="font-kanit font-extrabold text-[10px] xs:text-[11px] sm:text-[13px] tracking-[0.12em] sm:tracking-[0.16em] text-white uppercase drop-shadow whitespace-nowrap">
+              ANUBHAV AGARWAL
             </span>
-            <span className="text-[8px] sm:text-[10px] text-cyan-300/80 font-mono tracking-wider">
-              AI SEARCH • LLM CITATION
+            <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-cyan-300/90 font-mono tracking-wider uppercase whitespace-nowrap mt-0.5">
+              DIGITAL MARKETER
             </span>
           </div>
         </motion.div>
