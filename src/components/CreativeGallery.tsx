@@ -86,6 +86,7 @@ export const CreativeGallery: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
               onClick={() => setActiveItem(item)}
+              data-cursor-text="INSPECT"
               className="group relative rounded-3xl bg-[#131419] border border-[rgba(215,226,234,0.12)] hover:border-cyan-400/50 overflow-hidden cursor-pointer flex flex-col justify-between shadow-xl transition-all duration-300 hover:-translate-y-1.5"
             >
               {/* Graphic Card Preview Canvas */}

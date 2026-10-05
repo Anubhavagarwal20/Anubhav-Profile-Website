@@ -142,6 +142,7 @@ export const FeaturedProjects: React.FC = () => {
                   <div className="lg:col-span-7">
                     <div
                       onClick={() => setActiveProject(project)}
+                      data-cursor-text="VIEW"
                       className="cursor-pointer grid grid-cols-1 sm:grid-cols-12 gap-4"
                     >
                       {/* Main Large Visual Card (8 cols) */}

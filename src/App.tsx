@@ -13,12 +13,16 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { AmbientGlow } from './components/AmbientGlow';
+import { CustomCursor } from './components/CustomCursor';
 
 export const App: React.FC = () => {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#0C0C0C] text-[#D7E2EA] font-sans relative selection:bg-cyan-500 selection:text-black">
+      {/* Interactive Custom Cursor */}
+      <CustomCursor />
+
       {/* Cinematic Ambient Mouse Glow */}
       <AmbientGlow />
 
