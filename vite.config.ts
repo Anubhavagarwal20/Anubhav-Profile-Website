@@ -9,6 +9,7 @@ export default defineConfig({
     react()
   ],
   build: {
+    sourcemap: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {

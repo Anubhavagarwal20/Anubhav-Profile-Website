@@ -24,6 +24,7 @@ interface ContactProps {
 export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -78,12 +79,18 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     }
   };
 
+  const sanitizeField = (value: string, maxLength: number) => {
+    return value.replace(/<[^>]*>?/gm, '').trim().slice(0, maxLength);
+  };
+
   const handleSendGmail = async () => {
     if (!formRef.current) return;
     if (!formRef.current.reportValidity()) return;
 
-    const trimmedName = formData.name.trim();
-    const finalData = { ...formData, name: trimmedName };
+    const trimmedName = sanitizeField(formData.name, 100);
+    const trimmedEmail = sanitizeField(formData.email, 120);
+    const trimmedMessage = sanitizeField(formData.message, 3000);
+    const finalData = { ...formData, name: trimmedName, email: trimmedEmail, message: trimmedMessage };
     setSubmittedData(finalData);
 
     // Synchronously open Gmail Web tab
@@ -98,10 +105,11 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: trimmedName,
-          email: formData.email.trim(),
+          email: trimmedEmail,
           service: formData.service,
           budget: formData.budget,
-          message: formData.message.trim(),
+          message: trimmedMessage,
+          website_hp: honeypot,
         }),
       });
     } catch {
@@ -113,8 +121,10 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
 
-    const trimmedName = formData.name.trim();
-    const finalData = { ...formData, name: trimmedName };
+    const trimmedName = sanitizeField(formData.name, 100);
+    const trimmedEmail = sanitizeField(formData.email, 120);
+    const trimmedMessage = sanitizeField(formData.message, 3000);
+    const finalData = { ...formData, name: trimmedName, email: trimmedEmail, message: trimmedMessage };
     setSubmittedData(finalData);
     setStatus('submitting');
 
@@ -127,10 +137,11 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: trimmedName,
-          email: formData.email.trim(),
+          email: trimmedEmail,
           service: formData.service,
           budget: formData.budget,
-          message: formData.message.trim(),
+          message: trimmedMessage,
+          website_hp: honeypot,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -393,6 +404,20 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
               {/* FORM VIEW */}
               {status !== 'success' && (
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot Bot Trap (Invisible to real users, catches automated spam bots) */}
+                  <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+                    <label htmlFor="contact-hp">Leave empty</label>
+                    <input
+                      id="contact-hp"
+                      type="text"
+                      name="website_hp"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="contact-name" className="block text-xs font-kanit uppercase tracking-wider text-[#8E99A4] mb-2">
@@ -404,6 +429,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                         type="text"
                         autoComplete="name"
                         required
+                        maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="e.g. Rahul Sharma"
@@ -421,6 +447,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                         type="email"
                         autoComplete="email"
                         required
+                        maxLength={120}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="you@company.com"
@@ -490,6 +517,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenResume }) => {
                       name="message"
                       required
                       rows={4}
+                      maxLength={3000}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Share a brief overview of your business, website URL, target timeline, or what you'd like to achieve..."
